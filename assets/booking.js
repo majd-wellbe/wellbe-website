@@ -2,7 +2,7 @@
    (Wellbe W40 Backend, tab LEADS W40). Leads from here carry source "website".
    API contract unchanged: GET ?action=slots, POST {action:'lead'}, POST {action:'book'}. */
 var CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/AKfycbxrCVPkY-h2xqTqeHhhaChdaSAf1KbEsJ_HbRSP-oyg4r-qgF-sgSJtFZ0D0uyhDiOS/exec',
+  API_URL: 'https://fuwxmbdygqrmcbhwvrfx.supabase.co/functions/v1/api',
   CAP: 3
 };
 (function(){
@@ -19,7 +19,7 @@ var CONFIG = {
   var invite = (/^\d{4}-\d{2}-\d{2}$/.test(qs.get('d')||'') && /^(7|8|9|10)$/.test(qs.get('h')||'')) ? {date:qs.get('d'),hour:+qs.get('h'),by:(qs.get('by')||'your friend').slice(0,30)} : null;
 
   /* ---------- API (unchanged contract: GET slots, POST lead, POST book) ---------- */
-  function apiGet(){ if(!CONFIG.API_URL) return demoSlots(); return fetch(CONFIG.API_URL+'?action=slots&t='+Date.now()).then(function(r){return r.json()}) }
+  function apiGet(){ if(!CONFIG.API_URL) return demoSlots(); return fetch(CONFIG.API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'slots'})}).then(function(r){return r.json()}) }
   function apiPost(b){ if(!CONFIG.API_URL) return demoPost(b); return fetch(CONFIG.API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(b)}).then(function(r){return r.json()}) }
 
   /* ---------- dates ---------- */
